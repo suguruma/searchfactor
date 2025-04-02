@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>異常原因モデル化アプリ</title>
+</head>
+<body>
+    <h2>テンプレートファイルのアップロード（CSV/Excel）</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit">モデル化実行</button>
+    </form>
+
+    {% if success %}
+        <p style="color:green;">✅ モデル構築が完了しました！</p>
+    {% endif %}
+    {% if error %}
+        <p style="color:red;">⚠ エラー：{{ error }}</p>
+    {% endif %}
+
+    <hr/>
+
+    <h2>異常原因を質問する</h2>
+    <form action="/search" method="post">
+        <input type="text" name="query" placeholder="例: 温度異常の原因は？" size="40"/>
+        <button type="submit">検索</button>
+    </form>
+
+    {% if query %}
+        <p><strong>検索クエリ：</strong>{{ query }}</p>
+    {% endif %}
+    {% if results %}
+        <h3>🔍 類似するテンプレート：</h3>
+        <ul>
+            {% for r in results %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
